@@ -11,7 +11,7 @@
 //! ホスト側でスレッド数・グループ数を正確に設定するため、
 //! 並列化時に境界チェック（if文）は生成しない。
 
-use crate::ast::{AddressSpace, AstNode, Literal, Scope};
+use crate::ast::{AstNode, Literal, Scope};
 use crate::opt::ast::{AstSuggestResult, AstSuggester};
 
 use super::parallelization_common::{
@@ -685,7 +685,7 @@ impl AstSuggester for LocalParallelizationSuggester {
 mod tests {
     use super::*;
     use crate::ast::{
-        DType, Mutability, ParallelInfo, VarDecl, VarKind,
+        AddressSpace, DType, Mutability, ParallelInfo, VarDecl, VarKind,
         helper::{eq, load, store},
     };
 

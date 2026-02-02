@@ -8,7 +8,6 @@ pub mod bit_ops;
 pub mod const_folding;
 mod macros;
 
-use crate::ast::AddressSpace;
 use crate::ast::pat::AstRewriteRule;
 use crate::backend::traits::DeviceInstruction;
 use crate::opt::context::DeviceCapabilities;
@@ -182,7 +181,7 @@ pub fn all_rules_with_search() -> Vec<Rc<AstRewriteRule>> {
 mod tests {
     use super::*;
     use crate::ast::helper::{const_f32, const_int, exp2, idiv, log2, max, recip, rem, sqrt, var};
-    use crate::ast::{AstNode, ParallelInfo, Scope};
+    use crate::ast::{AddressSpace, AstNode, ParallelInfo, Scope};
     use crate::opt::ast::AstOptimizer;
     use crate::opt::ast::RuleBaseOptimizer;
 

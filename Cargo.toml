@@ -22,6 +22,7 @@ description = "Eclat: A transpiler for AI accelerators"
 [features]
 default = []
 viz = []
+cuda = []
 
 [dependencies]
 # Core dependencies

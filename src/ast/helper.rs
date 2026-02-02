@@ -1,4 +1,4 @@
-use super::{AddressSpace, AstNode, DType, Literal, Scope};
+use super::{AstNode, DType, Literal, Scope};
 
 // Convenience free functions for AST construction
 
@@ -460,7 +460,7 @@ pub fn const_f32(value: f32) -> AstNode {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ast::Literal;
+    use crate::ast::{AddressSpace, Literal};
 
     #[test]
     #[allow(clippy::approx_constant)]

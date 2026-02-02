@@ -1,5 +1,5 @@
 use super::AstCostEstimator;
-use crate::ast::{AddressSpace, AstNode, ParallelKind, VarKind};
+use crate::ast::{AstNode, ParallelKind, VarKind};
 use crate::opt::cost_utils::{log_sum_exp, log_sum_exp_iter};
 
 /// 簡単なコスト推定器
@@ -851,7 +851,7 @@ impl SimpleCostEstimator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ast::{DType, Literal, Mutability, Scope, VarDecl, VarKind};
+    use crate::ast::{AddressSpace, DType, Literal, Mutability, Scope, VarDecl, VarKind};
 
     #[test]
     fn test_function_inlining_reduces_cost() {

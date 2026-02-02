@@ -2,7 +2,7 @@
 //!
 //! 小さい関数をインライン展開して、関数呼び出しのオーバーヘッドを削減します。
 
-use crate::ast::{AddressSpace, AstNode};
+use crate::ast::AstNode;
 use crate::opt::ast::{AstSuggestResult, AstSuggester};
 use log::{debug, trace};
 use std::collections::{HashMap, HashSet};
@@ -763,7 +763,7 @@ impl AstSuggester for FunctionInliningSuggester {
 mod tests {
     use super::*;
     use crate::ast::helper::{const_int, var};
-    use crate::ast::{DType, Mutability, VarDecl, VarKind};
+    use crate::ast::{AddressSpace, DType, Mutability, VarDecl, VarKind};
 
     #[test]
     fn test_simple_function_inlining() {

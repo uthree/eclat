@@ -3,7 +3,7 @@
 //! 複数のAstNode::Functionを1つのFunctionに統合し、
 //! 後段のLoopFusionSuggesterでループ融合を可能にします。
 
-use crate::ast::{AddressSpace, AstNode, Scope, VarDecl};
+use crate::ast::{AstNode, Scope, VarDecl};
 use crate::opt::ast::{AstSuggestResult, AstSuggester};
 use log::{debug, trace};
 
@@ -255,7 +255,7 @@ impl AstSuggester for FunctionMergeSuggester {
 mod tests {
     use super::*;
     use crate::ast::helper::{const_int, range, store, var};
-    use crate::ast::{DType, Mutability, VarKind};
+    use crate::ast::{AddressSpace, DType, Mutability, VarKind};
 
     fn make_simple_function(name: &str, output_var: &str) -> AstNode {
         let body = range(

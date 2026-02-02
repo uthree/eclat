@@ -4,12 +4,12 @@
 //! 複数スレッドがデータを再利用するパターンを検出し、
 //! 共有メモリへのプリロードと同期を挿入します。
 
-use crate::ast::{AstNode, DType, Literal, ParallelInfo, ParallelKind, Scope};
+use crate::ast::{AstNode, DType, Literal, ParallelKind, Scope};
 use crate::opt::ast::{AstSuggestResult, AstSuggester};
 use log::{debug, trace};
 
 #[cfg(test)]
-use crate::ast::{AddressSpace, Mutability, VarDecl, VarKind};
+use crate::ast::{AddressSpace, Mutability, ParallelInfo, VarDecl, VarKind};
 
 /// 共有メモリ最適化候補
 #[derive(Debug, Clone)]
@@ -18,16 +18,12 @@ struct SharedMemoryCandidate {
     ptr_var: String,
     /// Load対象のデータ型
     dtype: DType,
-    /// 内側ループ変数（再利用の軸）
-    inner_loop_var: String,
     /// 再利用回数（内側ループの反復回数）
     reuse_count: i64,
     /// 共有メモリに格納するサイズ（要素数）
     shared_size: i64,
     /// 並列ループ変数
     parallel_var: String,
-    /// 並列ループのサイズ
-    parallel_size: i64,
 }
 
 /// 共有メモリ最適化を提案するSuggester
@@ -203,11 +199,9 @@ impl SharedMemorySuggester {
                                     candidates.push(SharedMemoryCandidate {
                                         ptr_var,
                                         dtype,
-                                        inner_loop_var: inner_var.clone(),
                                         reuse_count,
                                         shared_size,
                                         parallel_var: parallel_var.to_string(),
-                                        parallel_size,
                                     });
                                 }
                             }
