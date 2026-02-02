@@ -174,15 +174,16 @@ Rand                    // 乱数生成
 
 ```rust
 pub struct ParallelInfo {
-    pub parallel_type: ParallelType,
-    pub factor: Option<usize>,
+    pub is_parallel: bool,              // 並列実行可能か
+    pub kind: ParallelKind,             // 並列化の種類
+    pub reductions: Vec<(String, ReductionOp)>,  // リダクション変数と演算子
 }
 
-pub enum ParallelType {
-    Local,      // OpenMP local
-    Group,      // GPU workgroup
-    GPU,        // GPU global
-    Rayon,      // Rayon (Rust)
+pub enum ParallelKind {
+    Sequential, // 逐次実行（デフォルト）
+    OpenMP,     // OpenMP parallel for
+    GpuThread,  // GPUスレッド並列
+    Rayon,      // Rayon parallel iterator (Rust)
 }
 ```
 
@@ -194,7 +195,16 @@ pub enum ParallelType {
 pub struct VarDecl {
     pub name: String,
     pub dtype: DType,
-    pub is_buffer: bool,    // バッファポインタか
+    pub mutability: Mutability,  // 可変性
+    pub kind: VarKind,           // 変数の種類
+}
+
+pub enum VarKind {
+    Normal,           // 通常の変数/引数
+    GroupId(usize),   // グループID（軸番号）
+    LocalId(usize),   // ローカルスレッドID（軸番号）
+    GroupSize(usize), // グループサイズ（軸番号）
+    GridSize(usize),  // グリッドサイズ（軸番号）
 }
 ```
 

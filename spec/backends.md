@@ -2,13 +2,12 @@
 
 ## 概要
 
-Eclatは6つのバックエンドをサポート。プラグイン可能なアーキテクチャ。
+Eclatは5つのバックエンドをサポート。プラグイン可能なアーキテクチャ。
 
 | バックエンド | ターゲット | 出力 | 用途 |
 |--------------|------------|------|------|
 | C | CPU | C言語 | シーケンシャル実行 |
 | OpenMP | CPU | C + pragma | マルチスレッド並列 |
-| Rust | CPU | Rust cdylib | Rustネイティブ |
 | CUDA | NVIDIA GPU | CUDA | GPU並列 |
 | Metal | Apple GPU | Metal Shading | macOS GPU |
 | OpenCL | 汎用GPU | OpenCL | クロスプラットフォームGPU |
@@ -196,32 +195,17 @@ __kernel void kernel_0(
 }
 ```
 
-### Rust バックエンド
-
-Rust cdylib生成。
-
-```rust
-#[no_mangle]
-pub extern "C" fn kernel_0(buf0: *const f32, buf1: *mut f32, n: i64) {
-    for i in 0..n as usize {
-        unsafe {
-            *buf1.add(i) = *buf0.add(i) * 2.0;
-        }
-    }
-}
-```
-
 ## 型マッピング
 
-| DType | C/OpenMP | CUDA | Metal | OpenCL | Rust |
-|-------|----------|------|-------|--------|------|
-| Bool | `_Bool` | `bool` | `bool` | `bool` | `bool` |
-| I8 | `signed char` | `char` | `char` | `char` | `i8` |
-| I32 | `int` | `int` | `int` | `int` | `i32` |
-| I64 | `long long` | `long long` | `long` | `long` | `i64` |
-| F16 | `_Float16` | `half` | `half` | `half` | `half::f16` |
-| F32 | `float` | `float` | `float` | `float` | `f32` |
-| F64 | `double` | `double` | `double`* | `double` | `f64` |
+| DType | C/OpenMP | CUDA | Metal | OpenCL |
+|-------|----------|------|-------|--------|
+| Bool | `_Bool` | `bool` | `bool` | `bool` |
+| I8 | `signed char` | `char` | `char` | `char` |
+| I32 | `int` | `int` | `int` | `int` |
+| I64 | `long long` | `long long` | `long` | `long` |
+| F16 | `_Float16` | `half` | `half` | `half` |
+| F32 | `float` | `float` | `float` | `float` |
+| F64 | `double` | `double` | `double`* | `double` |
 
 *Metalではdoubleのサポートは限定的
 

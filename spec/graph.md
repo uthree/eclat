@@ -48,10 +48,10 @@ pub enum GraphOp {
 
     // 累積演算
     Scan {
-        reduce_op: ReduceOp,    // 累積演算種別
-        dim: usize,             // 軸
-        exclusive: bool,        // 排他的か
-        reverse: bool,          // 逆順か
+        map: AstNode,           // スキャン前の要素演算
+        scan_op: ReduceOp,      // スキャン演算種別
+        axis: usize,            // 軸
+        exclusive: bool,        // 排他的か（output[i]がinput[i]を含まない）
     },
 }
 ```
